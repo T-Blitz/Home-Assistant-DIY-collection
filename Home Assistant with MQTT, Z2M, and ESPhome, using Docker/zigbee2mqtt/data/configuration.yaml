@@ -1,0 +1,13 @@
+# Minimal configuration.yml example
+
+#change to false once you got everything connected
+permit_join: true
+mqtt:
+  server: mqtt://your ip and port
+serial:
+  # Could be either USB port (/dev/ttyUSB0), network Zigbee adapters (tcp://192.168.1.1:6638) or mDNS adapter (mdns://my-adapter).
+  port: /dev/ttyUSB0
+# Will run frontend on port 8080
+frontend: true 
+
+# passwort setting still needed

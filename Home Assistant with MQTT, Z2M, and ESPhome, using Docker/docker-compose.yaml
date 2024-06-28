@@ -1,0 +1,59 @@
+#version: '3.8' obsolete i guess
+services:
+  homeassistant:
+    container_name: "Home-Assistant"
+    image: "ghcr.io/home-assistant/home-assistant:stable"
+    restart: unless-stopped
+    stop_grace_period: 2m
+    volumes:
+      - "/DATA/AppData/HassServer/homeassistant/config:/config"  #change PATH_TO_YOUR_CONFIG to your path 
+      - /etc/localtime:/etc/localtime:ro
+      - /run/dbus:/run/dbus:ro
+    privileged: true
+    network_mode: host
+    environment:
+      - TZ=Europe/Berlin
+
+  mqtt:
+    container_name: "Eclipse-Mosquitto"
+    image: eclipse-mosquitto
+    restart: unless-stopped
+    volumes:
+      - "/DATA/AppData/HassServer/mosquitto/data:/mosquitto/data"
+      - "/DATA/AppData/HassServer/mosquitto/config:/mosquitto/config"
+      - "/DATA/AppData/HassServer/mosquitto/log:/mosquitto/log"
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    #network_mode: host
+    #command: "mosquitto -c /mosquitto-no-auth.conf"
+
+  zigbee2mqtt:
+    container_name: "Zigbee2MQTT"
+    restart: unless-stopped
+    image: koenkk/zigbee2mqtt
+    volumes:
+      - "/DATA/AppData/HassServer/zigbee2mqtt/data:/app/data"
+      - /run/udev:/run/udev:ro
+    ports:
+      - 8080:8080
+    environment:
+      - TZ=Europe/Berlin
+# comment out if using serial over tcp
+#    devices:
+#      - /dev/ttyUSB0:/dev/ttyACM0
+
+  esphome:
+    image: esphome/esphome:latest
+    container_name: "ESPHome"
+    restart: unless-stopped
+    volumes:
+      - "/DATA/AppData/HassServer/esphome/config:/config"
+#    network_mode: "host"
+    ports:
+      - 6052:6052
+    environment:
+      - TZ=Europe/Berlin
+      - USERNAME=admin
+      - PASSWORD=CHANGE_TO_YOUR_ESPHOME_NOW
+

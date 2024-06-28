@@ -1,0 +1,4 @@
+
+# enable once setup, for better security
+ip_ban_enabled: false
+login_attempts_threshold: 15
