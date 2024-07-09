@@ -1,0 +1,30 @@
+TEMPLATE
+
+{{ now().day }}
+{{ ['Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag','Sonntag'][now().weekday()] }}
+{{ ['Januar-01','Februar-02','März-03','April-04','Mai-05','Juni-06','Juli-07','August-0','September-09','Oktober-10','November-11','Dezember-12'][now().month-1] }}
+{{ now().year }}
+
+CLOCK IMAGE ELEMENT
+
+show_state: true
+show_name: true
+camera_view: auto
+type: picture-elements
+image: >-
+  data:image/svg+xml,%3Csvg%20width%3D%22300%22%20height%3D%22130%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%2F%3E
+elements:
+  - entity: sensor.time
+    style:
+      color: var(--accent-color)
+      font-size: 600%
+      left: 50%
+      top: 45%
+    type: state-label
+  - entity: sensor.voll_datum
+    style:
+      color: var(--primary-text-color)
+      font-size: 200%
+      left: 50%
+      top: 80%
+    type: state-label
